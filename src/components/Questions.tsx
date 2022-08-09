@@ -5,7 +5,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { PlayIcon, PauseIcon, ArrowCircleLeftIcon, ArrowCircleRightIcon } from '@heroicons/react/solid'
 import { Theme } from '../types/Question'
 import { usePresenterMode } from '../contexts/PresenterMode'
-import { IconButton } from './IconButton'
+import { IconButton } from './Actions'
 
 interface QuestionsDisplayProps {
   theme: Theme

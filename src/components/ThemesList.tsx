@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { useLocalstorageState } from 'rooks'
 import cx from 'classnames'
-import { themes } from '../models/themes'
 import { Theme } from '../types/Question'
 import { Questions } from './Questions'
 
@@ -12,6 +11,7 @@ interface ThemeDisplayProps {
 }
 
 interface ThemesListProps {
+  themes: Theme[]
   onThemeSelected?(theme: Theme | null): void
 }
 
@@ -30,13 +30,15 @@ function ThemeDisplay({ theme, disabled, onSelect }: ThemeDisplayProps) {
           e.preventDefault()
         }
       }}
+      // Should have a fixed size for a better layout, which can be determined
+      // once we have the themes
       className={cx(`
         rounded flex flex-col gap-1 items-center justify-around select-none
         drop-shadow-md bg-gray-50
-        focus:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-900
+        focus:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-sky-700
         transition-all duration-100 ease-in-out
       `, {
-        'grayscale cursor-not-allowed': disabled,
+        'grayscale cursor-not-allowed opacity-75': disabled,
         'hover:drop-shadow-lg hover:scale-110 hover:bg-gray-200': !disabled,
         'hover:scale-110 focus:scale-110': !disabled
       })}
@@ -51,7 +53,7 @@ function ThemeDisplay({ theme, disabled, onSelect }: ThemeDisplayProps) {
   )
 }
 
-export function ThemesList({ onThemeSelected }: ThemesListProps) {
+export function ThemesList({ themes, onThemeSelected }: ThemesListProps) {
   const [selectedTheme, setSelectedTheme] = useLocalstorageState<Theme | null>('selectedTheme', null)
   // Should be using `Set`, but not properly serializable
   // Ideally, we should have the features from both `react-use` and `rooks`
