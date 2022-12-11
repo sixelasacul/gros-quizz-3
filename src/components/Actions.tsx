@@ -18,6 +18,7 @@ interface ButtonProps {
 interface ToggleProps {
   label: string
   icon?: React.ReactNode // meh
+  initialValue?: boolean
   onToggle?(enabled: boolean): void
 }
 
@@ -39,24 +40,24 @@ export function IconButton({ icon, disabled, className, onClick }: IconButtonPro
 }
 
 export function Button({ children, icon = null, onClick }: ButtonProps) {
-return (
+  return (
     <button
       onClick={onClick}
       className={cx(`
-        w-full rounded-lg px-6 py-2 text-sm font-medium leading-5
-        bg-sky-500 text-white hover:bg-sky-600
-        ring-sky-300 focus:outline-none focus:ring-2
-        transition duration-150 ease-in-out
-        flex flex-row gap-2 items-center
-      `)}
+          w-full rounded-lg px-6 py-2 text-sm font-medium leading-5
+          bg-sky-500 text-white hover:bg-sky-600
+          ring-sky-300 focus:outline-none focus:ring-2
+          transition duration-150 ease-in-out
+          flex flex-row gap-2 items-center
+        `)}
     >
       {icon}{children}
     </button>
   )
 }
 
-export function Toggle({ label, icon = null, onToggle }: ToggleProps) {
-  const [enabled, setEnabled] = React.useState(false)
+export function Toggle({ label, icon = null, initialValue = false, onToggle }: ToggleProps) {
+  const [enabled, setEnabled] = React.useState(initialValue)
 
   function toggle(newValue: boolean) {
     setEnabled(newValue)
@@ -92,5 +93,33 @@ export function Toggle({ label, icon = null, onToggle }: ToggleProps) {
         </Switch>
       </div>
     </Switch.Group>
+  )
+}
+
+interface UploadProps {
+  label: string
+  multiple?: boolean
+  accept?: string
+  onFileUpload(files: FileList | null): void
+}
+
+export function Upload({ label, accept, multiple = false, onFileUpload }: UploadProps) {
+  return (
+    <label
+      tabIndex={0}
+      className={cx(`
+      w-full rounded-lg px-6 py-2 text-sm font-medium leading-5
+      border-2 border-dashed border-sky-500
+      bg-sky-200 text-white hover:bg-sky-300
+      ring-sky-300 focus:outline-none focus:ring-2
+      transition duration-150 ease-in-out
+      flex flex-row gap-2 items-center justify-center
+      cursor-pointer
+    `)}>
+      {label}
+      <input type='file' multiple={multiple} accept={accept} hidden onChange={(e) => {
+        onFileUpload(e.target.files)
+      }} />
+    </label>
   )
 }

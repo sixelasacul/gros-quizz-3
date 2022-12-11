@@ -1,19 +1,13 @@
 import * as React from 'react'
 import { RefreshIcon } from '@heroicons/react/outline'
 import { usePresenterMode } from '../contexts/PresenterMode'
-import { Button, Toggle } from './Actions'
-
-interface OptionProps {
-  label: string
-  Icon: React.ElementType<{className?: string}>
-  onClick(): void
-}
+import { Button, Toggle, Upload } from './Actions'
 
 function useFullscreen() {
   const [isFullscreen, setIsFullscreen] = React.useState(false)
 
   async function toggleFullscreen() {
-    if(isFullscreen) {
+    if (isFullscreen) {
       await document.exitFullscreen()
       setIsFullscreen(false)
     } else {
@@ -27,7 +21,7 @@ function useFullscreen() {
       // This event is triggered once the full screen change is effective. Thus,
       // we just need to check that there's no more element in full screen mode
       // to synchronize back the state (when it wasn't done via the button).
-      if(!document.fullscreenElement) {
+      if (!document.fullscreenElement) {
         setIsFullscreen(false)
       }
     }
@@ -45,11 +39,13 @@ export function Options() {
   return (
     <div className='rounded shadow-lg bg-white p-4 flex flex-col gap-4'>
       <Toggle
-        label={isPresenterModeOn ? 'Passer à la vue présentateur' : 'Passer à la vue spectateur'}
+        label={isPresenterModeOn ? 'Passer à la vue spectateur' : 'Passer à la vue présentateur'}
+        initialValue={isPresenterModeOn}
         onToggle={togglePresenterMode}
       />
       <Toggle
         label={isFullscreen ? 'Quitter le mode plein écran' : 'Passer en mode plein écran'}
+        initialValue={isFullscreen}
         onToggle={toggleFullscreen}
       />
       <Button
@@ -58,6 +54,16 @@ export function Options() {
       >
         Réinitialiser l'application
       </Button>
+      {isPresenterModeOn && (
+        <>
+          <Upload label='Thèmes' accept='application/json' onFileUpload={(files) => {
+            console.log(files)
+          }} />
+          <Upload label='Images' accept='image/*' multiple onFileUpload={(files) => {
+            console.log(files)
+          }} />
+        </>
+      )}
     </div>
   )
 }

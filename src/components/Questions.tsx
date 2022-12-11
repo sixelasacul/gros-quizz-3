@@ -131,13 +131,13 @@ function QuestionsDisplay({ theme, title = <h2 className='text-2xl leading-tight
       <TimerDisplay maxTime={DEFAULT_TIMER} currentTime={remainingTime} />
       {title}
       {currentQuestion && (<p className='text-4xl'>{currentQuestion.question}</p>)}
-      {currentQuestion && !isPresenterModeOn && (
+      {currentQuestion && isPresenterModeOn && (
         <p className='text-2xl'>{currentQuestion.answer}</p>
       )}
-      {!currentQuestion && isPresenterModeOn && (
+      {!currentQuestion && !isPresenterModeOn && (
         <p className='text-4xl'>Prêt ?</p>
       )}
-      {!isPresenterModeOn && (
+      {isPresenterModeOn && (
         <div className='flex flex-row gap-8 justify-center'>
           <IconButton
             onClick={startQuestions}
