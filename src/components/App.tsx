@@ -60,6 +60,7 @@ export function App() {
       <div className='absolute inset-0'>
         <div className='flex flex-col justify-between'>
           <h1
+            // variant: from-purple-500 to-rose-500
             className={`
               text-9xl text-center font-extrabold
               bg-clip-text text-transparent bg-gradient-to-r from-sky-500 to-emerald-500

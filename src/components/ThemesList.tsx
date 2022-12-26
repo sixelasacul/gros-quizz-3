@@ -34,8 +34,8 @@ function ThemeDisplay({ theme, disabled, onSelect }: ThemeDisplayProps) {
       // once we have the themes
       className={cx(`
         rounded flex flex-col gap-1 items-center justify-around select-none
-        drop-shadow-md bg-gray-50
-        focus:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-sky-700
+        drop-shadow-md bg-gray-50 py-2 px-1
+        focus:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-sky-500
         transition-all duration-100 ease-in-out
       `, {
         'grayscale cursor-not-allowed opacity-75': disabled,

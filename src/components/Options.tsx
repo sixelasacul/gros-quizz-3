@@ -4,7 +4,7 @@ import { usePresenterMode } from '../contexts/PresenterMode'
 import { Button, Toggle, Upload } from './Actions'
 
 function useFullscreen() {
-  const [isFullscreen, setIsFullscreen] = React.useState(false)
+  const [isFullscreen, setIsFullscreen] = React.useState(!!document.fullscreenElement)
 
   async function toggleFullscreen() {
     if (isFullscreen) {
